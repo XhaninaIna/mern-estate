@@ -12,7 +12,7 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-//server running ne porten 30000
+//server running ne porten 3000
 const app = express();
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
