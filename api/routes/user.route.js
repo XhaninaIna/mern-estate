@@ -1,7 +1,14 @@
 import express from "express";
 import { test } from "../controllers/user.controller.js";
+import { updateUser } from "../controllers/user.controller.js";
+import { verifyToken } from "../utils/verifyUser.js";
 const router = express.Router();
 //get merr nga db
 //per te vendosur te dhena perdoret "put"
 router.get("/test", test);
+
+//create update api route
+router.post("/update/:id", verifyToken, updateUser);
+//check if the user is auth or not , using token
+
 export default router;
