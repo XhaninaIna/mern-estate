@@ -13,6 +13,7 @@ import {
   FaChair,
 } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import ContactComponents from "../components/ContactComponents";
 export default function Listing() {
   SwiperCore.use([Navigation]);
   const [listing, setListing] = useState(null);
@@ -20,7 +21,8 @@ export default function Listing() {
   const [error, setError] = useState(false);
   const params = useParams();
   const [copied, setCopied] = useState(false);
-  const currentUser = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
+  const [contact, setContact] = useState(false);
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -42,7 +44,7 @@ export default function Listing() {
     };
     fetchListing();
   }, [params.listingId]);
-  console.log(loading);
+
   return (
     <main>
       {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
@@ -75,12 +77,13 @@ export default function Listing() {
                 }, 2000);
               }}
             />
-            {copied && (
-              <p className="fixed top-[23%] right-[5%] z-0 rounded-md bg-slate-100 p-2">
-                Link copied!
-              </p>
-            )}
           </div>
+          {copied && (
+            <p className="fixed top-[23%] right-[5%] z-0 rounded-md bg-slate-100 p-2">
+              Link copied!
+            </p>
+          )}
+
           <div className="flex flex-col max-w-4xl mx-auto p-3 my-9 gap-4">
             <p className="text-2xl font-semibold">
               {listing.name}-${""}
@@ -133,6 +136,15 @@ export default function Listing() {
                 {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
+                onClick={() => setContact(true)}
+              >
+                Contact Landlord
+              </button>
+            )}
+            {contact && <ContactComponents listing={listing} />}
           </div>
         </>
       )}
