@@ -65,7 +65,7 @@ export const getListings = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
-    const offer = req.query.offer;
+    let offer = req.query.offer;
     if (offer === undefined || offer === "false") {
       offer = { $in: [false, true] };
     }
@@ -90,7 +90,7 @@ export const getListings = async (req, res, next) => {
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
-    const lisitngs = await Listing.find({
+    const listings = await Listing.find({
       // "i" lowercase dhe uppercase
       name: { $regex: searchTerm, $options: "i" },
       offer,
@@ -103,7 +103,7 @@ export const getListings = async (req, res, next) => {
       })
       .limit(limit)
       .skip(startIndex);
-    return res.status(2000).json(lisitngs);
+    return res.status(200).json(listings);
   } catch (error) {
     next(error);
   }
