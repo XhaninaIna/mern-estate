@@ -25,10 +25,13 @@ const app = express();
 app.use(express.json());
 //cookie parser
 app.use(cookieParser());
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+//app.listen(3000, () => {
+  //console.log("Server is running on port 3000");
+//});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
 //api route
 //request for client(browser), response for server
 app.use("/api/user", userRouter);
@@ -37,10 +40,10 @@ app.use("/api/auth", authRouter);
 
 app.use("/api/listing", listingRouter);
 
-app.use(express.static(path.join(__dirname, "/client/dist")));
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"))
-);
+//app.use(express.static(path.join(__dirname, "/client/dist")));
+//app.get("*", (req, res) =>
+  //res.sendFile(path.join(__dirname, "client", "dist", "index.html"))
+//);
 //create middleware
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
