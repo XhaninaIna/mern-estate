@@ -1,4 +1,7 @@
 import express from "express";
+router.get("/", (req, res) => {
+  res.json({ message: "Listing API is working 🚀" });
+});
 import {
   createListing,
   deleteListing,
